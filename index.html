@@ -339,15 +339,17 @@ document.documentElement.classList.add("js");
 const TOTAL_CARDS = 28;
 const TAPS_NEEDED = 10;
 
-// ---------- GENERAR TARJETAS (28 normales + 1 especial) ----------
-
 const gallery = document.getElementById("gallery");
 let html = "";
 
+// Genera automáticamente desde IMG-20261108-WA0001.jpg hasta IMG-20261108-WA0028.jpg
 for (let i = 1; i <= TOTAL_CARDS; i++) {
+    let numeroStr = String(i).padStart(4, '0'); // Convierte 1 en "0001", 2 en "0002", etc.
+    let imageName = `IMG-20261108-WA${numeroStr}.jpg`;
+    
     html += `
     <article class="card reveal">
-        <img src="https://picsum.photos/seed/recuerdo${i}/600/400"
+        <img src="image/${imageName}"
              width="600" height="400"
              loading="lazy" decoding="async"
              alt="Recuerdo ${i}">
@@ -358,10 +360,11 @@ for (let i = 1; i <= TOTAL_CARDS; i++) {
     </article>`;
 }
 
+// Tarjeta especial (cambia "especial.jpg" si tu foto principal tiene otro nombre)
 html += `
     <article class="special-card reveal">
         <div class="special-glow"></div>
-        <img src="https://picsum.photos/seed/aniversario/1000/700"
+        <img src="image/especial.jpg"
              width="1000" height="700"
              loading="lazy" decoding="async"
              alt="Nuestro aniversario">
@@ -376,7 +379,7 @@ html += `
         </div>
     </article>`;
 
-gallery.innerHTML = html; // una sola escritura al DOM
+gallery.innerHTML = html;
 
 // ---------- APERTURA ----------
 
