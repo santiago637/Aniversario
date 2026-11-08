@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Aniversario ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',system-ui,sans-serif;
+    background:linear-gradient(135deg,#ffdde1,#ee9ca7,#ffc3a0);
+    background-attachment:fixed;
+    overflow-x:hidden;
+}
+
+body.locked{ overflow:hidden; }
+
+/* ---------- INTRO ---------- */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
+    transition:opacity 1s;
+}
+
+#intro.hide{
+    opacity:0;
+    pointer-events:none;
+}
+
+.heart-btn{
+    --s:150px;
+    background:none;
+    border:0;
+    cursor:pointer;
+    width:calc(var(--s) * 2);
+    height:calc(var(--s) * 2);
+    display:grid;
+    place-items:center;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.heart-btn:focus-visible{
+    outline:3px solid #fff;
+    outline-offset:6px;
+    border-radius:50%;
+}
+
+.heart{
+    width:var(--s);
+    height:var(--s);
+    background:#fff;
+    position:relative;
+    transform:rotate(-45deg);
+    animation:pulse 1.2s infinite;
+}
+
+.heart::before,
+.heart::after{
+    content:"";
+    width:var(--s);
+    height:var(--s);
+    background:#fff;
+    border-radius:50%;
+    position:absolute;
+}
+
+.heart::before{ top:calc(var(--s) / -2); left:0; }
+.heart::after{ left:calc(var(--s) / 2); top:0; }
+
+@keyframes pulse{
+    0%,100%{ transform:rotate(-45deg) scale(1); }
+    50%{ transform:rotate(-45deg) scale(1.12); }
+}
+
+.tap-text{
+    margin-top:20px;
+    color:#fff;
+    font-size:1.2rem;
+    text-align:center;
+    padding:0 20px;
+}
+
+.progress-wrapper{
+    width:min(280px,80vw);
+    height:18px;
+    margin-top:20px;
+    border-radius:50px;
+    overflow:hidden;
+    background:rgba(255,255,255,.3);
+}
+
+.progress{
+    width:100%;
+    height:100%;
+    background:#fff;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .3s;
+}
+
+/* ---------- CONTENIDO ---------- */
+
+.main-content{
+    position:relative;
+    z-index:1;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 1s;
+}
+
+.main-content.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.hero{
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:40px;
+}
+
+.hero h1{
+    color:#fff;
+    font-size:clamp(2.2rem,6vw,3.5rem);
+    text-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.hero p{
+    color:#fff;
+    margin-top:15px;
+    font-size:clamp(1rem,2.5vw,1.2rem);
+}
+
+/* ---------- GALERÍA ---------- */
+
+.gallery{
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+    padding-bottom:100px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+    transition:transform .4s;
+}
+
+.card:hover{ transform:translateY(-10px); }
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    display:block;
+    background:rgba(255,255,255,.3);
+}
+
+.text{ padding:20px; }
+
+.text h2{
+    color:#d63384;
+    margin-bottom:10px;
+    font-size:1.3rem;
+}
+
+.text p{ color:#444; }
+
+/* ---------- TARJETA ESPECIAL ---------- */
+
+.special-card{
+    grid-column:1 / -1;
+    position:relative;
+    margin:50px 0;
+    border-radius:35px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(214,51,132,.4),0 0 50px rgba(255,255,255,.3);
+}
+
+.special-card img{
+    width:100%;
+    height:clamp(380px,70vh,650px);
+    object-fit:cover;
+    display:block;
+}
+
+.special-content{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.8),rgba(0,0,0,.1));
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:clamp(20px,5vw,50px);
+    color:#fff;
+}
+
+.special-content h2{
+    font-size:clamp(1.8rem,5vw,3rem);
+    margin-bottom:10px;
+}
+
+.special-content h3{
+    color:#ffd6e7;
+    font-size:clamp(1.1rem,3vw,1.5rem);
+    margin-bottom:20px;
+}
+
+.special-content p{
+    max-width:700px;
+    line-height:1.8;
+}
+
+.special-glow{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);
+    animation:glow 4s infinite alternate;
+    pointer-events:none;
+}
+
+.special-content{ z-index:2; }
+
+@keyframes glow{
+    from{ opacity:.4; }
+    to{ opacity:1; }
+}
+
+/* ---------- APARICIÓN AL HACER SCROLL ---------- */
+
+.js .reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:opacity 1s ease,transform 1s ease;
+}
+
+.js .reveal.visible{
+    opacity:1;
+    transform:none;
+}
+
+/* ---------- CORAZONES FLOTANTES ---------- */
+
+.floating-hearts{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.floating-hearts span{
+    position:absolute;
+    top:0;
+    color:#fff;
+    opacity:.5;
+    will-change:transform;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{ transform:translateY(100vh); }
+    to{ transform:translateY(-100px); }
+}
+
+@media (max-width:768px){
+    .heart-btn{ --s:110px; }
+}
+
+@media (prefers-reduced-motion:reduce){
+    .heart,
+    .special-glow,
+    .floating-hearts span{ animation:none; }
+    .js .reveal{ transition:none; opacity:1; transform:none; }
+}
+</style>
+</head>
+<body class="locked">
+
+<div class="floating-hearts" id="floatingHearts" aria-hidden="true"></div>
+
+<div id="intro">
+    <button class="heart-btn" id="heartBtn" type="button" aria-label="Toca el corazón">
+        <div class="heart"></div>
+    </button>
+
+    <div class="tap-text">Toca el corazón <span id="remaining">10</span> veces ❤️</div>
+
+    <div class="progress-wrapper">
+        <div class="progress" id="progress"></div>
+    </div>
+</div>
+
+<main class="main-content" id="mainContent">
+
+    <section class="hero">
+        <h1>Nuestro Aniversario ❤️</h1>
+        <p>09/11/26 ✨</p>
+        <p>Un recorrido por nuestros recuerdos más especiales</p>
+    </section>
+
+    <section class="gallery" id="gallery"></section>
+
+</main>
+
+<script>
+document.documentElement.classList.add("js");
+
+const TOTAL_CARDS = 28;
+const TAPS_NEEDED = 10;
+
+// ---------- GENERAR TARJETAS (28 normales + 1 especial) ----------
+
+const gallery = document.getElementById("gallery");
+let html = "";
+
+for (let i = 1; i <= TOTAL_CARDS; i++) {
+    html += `
+    <article class="card reveal">
+        <img src="https://picsum.photos/seed/recuerdo${i}/600/400"
+             width="600" height="400"
+             loading="lazy" decoding="async"
+             alt="Recuerdo ${i}">
+        <div class="text">
+            <h2>Momento ${i}</h2>
+            <p>Aquí puedes escribir una descripción especial.</p>
+        </div>
+    </article>`;
+}
+
+html += `
+    <article class="special-card reveal">
+        <div class="special-glow"></div>
+        <img src="https://picsum.photos/seed/aniversario/1000/700"
+             width="1000" height="700"
+             loading="lazy" decoding="async"
+             alt="Nuestro aniversario">
+        <div class="special-content">
+            <h2>❤️ Nuestro Gran Día ❤️</h2>
+            <h3>09/11/26</h3>
+            <p>
+                Este recuerdo ocupa un lugar especial porque representa
+                todo lo que hemos vivido juntos y todo lo maravilloso
+                que aún nos queda por vivir.
+            </p>
+        </div>
+    </article>`;
+
+gallery.innerHTML = html; // una sola escritura al DOM
+
+// ---------- APERTURA ----------
+
+const heartBtn = document.getElementById("heartBtn");
+const progress = document.getElementById("progress");
+const remaining = document.getElementById("remaining");
+const intro = document.getElementById("intro");
+const content = document.getElementById("mainContent");
+
+let taps = 0;
+
+heartBtn.addEventListener("click", () => {
+    if (taps >= TAPS_NEEDED) return;
+
+    taps++;
+    progress.style.transform = `scaleX(${taps / TAPS_NEEDED})`;
+    remaining.textContent = Math.max(TAPS_NEEDED - taps, 0);
+    createExplosion();
+
+    if (taps === TAPS_NEEDED) {
+        intro.classList.add("hide");
+        content.classList.add("show");
+        document.body.classList.remove("locked");
+
+        setTimeout(() => intro.remove(), 1000);
+    }
+});
+
+// ---------- CORAZONES FLOTANTES ----------
+
+const floating = document.getElementById("floatingHearts");
+const fragment = document.createDocumentFragment();
+const heartsCount = window.innerWidth < 768 ? 20 : 35;
+
+for (let i = 0; i < heartsCount; i++) {
+    const span = document.createElement("span");
+    span.textContent = "❤";
+    span.style.left = Math.random() * 100 + "%";
+    span.style.fontSize = 15 + Math.random() * 35 + "px";
+    span.style.animationDuration = 6 + Math.random() * 10 + "s";
+    span.style.animationDelay = "-" + Math.random() * 10 + "s"; // ya en movimiento al cargar
+    fragment.appendChild(span);
+}
+
+floating.appendChild(fragment);
+
+// ---------- EXPLOSIÓN ----------
+
+function createExplosion() {
+    const rect = heartBtn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 12; i++) {
+        const particle = document.createElement("div");
+        particle.textContent = "💖";
+
+        Object.assign(particle.style, {
+            position: "fixed",
+            left: cx + "px",
+            top: cy + "px",
+            fontSize: "24px",
+            zIndex: "10000",
+            pointerEvents: "none"
+        });
+
+        const x = (Math.random() - 0.5) * 300;
+        const y = (Math.random() - 0.5) * 300;
+
+        const anim = particle.animate(
+            [
+                { transform: "translate(0,0) scale(1)", opacity: 1 },
+                { transform: `translate(${x}px,${y}px) scale(0)`, opacity: 0 }
+            ],
+            { duration: 1200, easing: "ease-out" }
+        );
+
+        anim.onfinish = () => particle.remove();
+        document.body.appendChild(particle);
+    }
+}
+
+// ---------- APARICIÓN AL HACER SCROLL ----------
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
